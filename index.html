@@ -47,10 +47,10 @@
         --cream: #eceef1;
         --tan: #d9bfa4;
         --brown: #4a4e57;
-        --dark: #2b2d33;
+        --dark: #252830;
         --red: #b8322b;
         --ink: #1f2024;
-        --muted: #6b6f78;
+        --muted: #555b65;
         --bg-featured: #fbfbfc;
         --bg-rooms: #ddd5c6;
         --bg-guide: #fbfbfc;
@@ -617,6 +617,7 @@
       }
       .category-block {
         margin: 0 0 58px;
+        scroll-margin-top: 108px;
       }
       .category-head {
         display: flex;
@@ -972,7 +973,7 @@
       }
       .article-detail .article-text {
         font-size: 15px;
-        color: #5e5149;
+        color: #454b55;
         white-space: pre-line;
       }
       .article-detail .eyebrow {
@@ -1043,7 +1044,7 @@
       }
       .footer-description {
         font-size: 12px;
-        color: #c3c6cd;
+        color: #d4d7de;
         max-width: 390px;
         margin-top: 18px;
       }
@@ -1058,7 +1059,7 @@
       .footer-col p {
         display: block;
         font-size: 12px;
-        color: #cdd0d6;
+        color: #e0e2e7;
         margin: 10px 0;
         text-decoration: underline;
         text-underline-offset: 3px;
@@ -1074,7 +1075,7 @@
         padding-top: 17px;
         text-align: left;
         font-size: 11px;
-        color: #c3c6cd;
+        color: #d4d7de;
       }
       .modal-backdrop {
         position: fixed;
@@ -1955,7 +1956,22 @@
                 <p>
                   Với nhiều lựa chọn phòng nghỉ và sự hỗ trợ tận tình,
                   10HARDHOME mong muốn trở thành một phần thân thương trong hành
-                  trình của bạn.
+                  trình của bạn. Mỗi căn phòng đều được hướng đến sự tiện nghi,
+                  sạch sẽ và cảm giác dễ chịu, để bạn có thể nghỉ ngơi thật trọn
+                  vẹn sau những giờ vui chơi, tham quan.
+                </p>
+                <p>
+                  Không chỉ là nơi lưu trú, chúng tôi mong 10HARDHOME còn là
+                  điểm bắt đầu cho những trải nghiệm đáng nhớ tại Đà Lạt. Từ
+                  việc hỗ trợ thông tin nhận phòng, gợi ý địa điểm ăn uống đến
+                  chia sẻ những góc tham quan thú vị, chúng tôi luôn cố gắng
+                  giúp chuyến đi của bạn thuận tiện và nhiều kỷ niệm hơn.
+                </p>
+                <p>
+                  Dù bạn đến Đà Lạt để nghỉ dưỡng, khám phá cùng bạn bè hay dành
+                  thời gian bên gia đình, 10HARDHOME hy vọng sẽ mang đến một
+                  không gian thân thiện để mỗi lần ghé thăm đều là một lần trở
+                  về với sự bình yên và gần gũi.
                 </p>
                 <button class="btn btn-primary" onclick="showPage('services')">
                   Khám phá phòng nghỉ →
@@ -2783,7 +2799,7 @@ Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trư�
         const moreBtn = expandable
           ? `<div class="category-actions"><button class="view-more" onclick="toggleCategory(this)">Xem thêm <span class="chev down"></span></button></div>`
           : "";
-        return `<section class="category-block" ${expandable ? 'data-expandable="true"' : ""}><div class="category-head"><div><h2>${cat.name}</h2><p>${cat.desc}</p></div></div><div class="room-grid">${rooms}</div>${moreBtn}</section>`;
+        return `<section class="category-block" ${expandable ? `id="service-category-${index}" data-expandable="true"` : ""}><div class="category-head"><div><h2>${cat.name}</h2><p>${cat.desc}</p></div></div><div class="room-grid">${rooms}</div>${moreBtn}</section>`;
       }
       document.getElementById("featuredRooms").innerHTML = categories
         .map((c, i) => roomCard(c.rooms[i], c, i))
@@ -2792,7 +2808,7 @@ Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trư�
         .map(
           (c, i) =>
             categoryMarkup(c, i, 4, false) +
-            `<div style="text-align:center;margin:-35px 0 48px"><button class="view-more" onclick="showPage('services')">Xem thêm <span class="chev"></span></button></div>`,
+            `<div style="text-align:center;margin:-35px 0 48px"><button class="view-more" onclick="openServiceCategory(${i})">Xem thêm <span class="chev"></span></button></div>`,
         )
         .join("");
       document.getElementById("serviceCategories").innerHTML = categories
@@ -2898,6 +2914,14 @@ Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trư�
             document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }),
           100,
         );
+      }
+      function openServiceCategory(index) {
+        showPage("services");
+        setTimeout(() => {
+          const target = document.getElementById(`service-category-${index}`);
+          if (target)
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 120);
       }
       function toggleCategory(button) {
         const block = button.closest(".category-block");
