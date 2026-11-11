@@ -246,6 +246,47 @@
         overflow: hidden;
         background: #cfd2d8;
       }
+      .hero-layer[data-slide="0"] {
+        overflow: hidden;
+      }
+
+      .hero-layer[data-slide="0"]::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        pointer-events: none;
+
+        background-image:
+          radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.95) 2px,
+            transparent 2px
+          ),
+          radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.75) 1.5px,
+            transparent 1.5px
+          ),
+          radial-gradient(circle, rgba(255, 255, 255, 0.9) 1px, transparent 1px);
+
+        background-size:
+          250px 250px,
+          180px 180px,
+          120px 120px;
+
+        animation: snowFall 18s linear infinite;
+      }
+
+      @keyframes snowFall {
+        from {
+          transform: translateY(-50px);
+        }
+        to {
+          transform: translateY(100%);
+        }
+      }
+
       .hero-layer {
         position: absolute;
         inset: 0;
@@ -306,7 +347,15 @@
       .christmas {
         font-family: Georgia, serif;
         font-style: italic;
-        letter-spacing: 1px;
+        letter-spacing: 2px;
+        font-size: clamp(60px, 8vw, 110px);
+        line-height: 0.95;
+        color: #ffffff;
+        text-shadow:
+          0 0 8px rgba(255, 255, 255, 0.4),
+          0 0 20px rgba(255, 255, 255, 0.35),
+          4px 4px 0 #b8322b,
+          8px 8px 15px rgba(0, 0, 0, 0.35);
       }
       .hero-desc {
         font-size: 16px;
