@@ -450,6 +450,8 @@
         gap: 20px;
       }
       .room-card {
+        display: flex;
+        flex-direction: column;
         background: white;
         border-radius: 7px;
         overflow: hidden;
@@ -487,6 +489,9 @@
       }
       .room-info {
         padding: 17px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
       }
       .room-info h3 {
         font-family: "Montserrat", sans-serif;
@@ -503,7 +508,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 13px 0;
+        margin: auto 0 13px;
+        padding-top: 13px;
         font-size: 11px;
         color: var(--muted);
       }
@@ -584,6 +590,10 @@
       .chev.up {
         transform: rotate(-45deg);
         top: 2px;
+      }
+      .chev.down {
+        transform: rotate(135deg);
+        top: -3px;
       }
       .category-block .room-grid .room-card:nth-child(n + 5) {
         display: none;
@@ -836,6 +846,29 @@
       .article-detail {
         max-width: 850px;
         margin: auto;
+      }
+      .article-detail .article-text {
+        font-size: 16px;
+        line-height: 1.9;
+        color: #3d4047;
+        margin: 0 0 18px;
+      }
+      .article-detail h2 {
+        font:
+          700 22px "Montserrat",
+          sans-serif;
+        color: var(--dark);
+        margin: 34px 0 12px;
+      }
+      .article-detail .article-list {
+        margin: 0 0 18px;
+        padding-left: 22px;
+        font-size: 16px;
+        line-height: 1.9;
+        color: #3d4047;
+      }
+      .article-detail .article-list li {
+        margin-bottom: 6px;
       }
       .article-detail img {
         height: 420px;
@@ -1192,6 +1225,274 @@
         }
         .explore-grid {
           grid-template-columns: 1fr;
+        }
+      }
+
+      /* ===== Chatbox ===== */
+      .chat-fab {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 1500;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        border: 0;
+        background: var(--red);
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(30, 32, 38, 0.3);
+        transition:
+          transform 0.2s,
+          background 0.2s;
+      }
+      /* Hiệu ứng gây chú ý */
+      .chat-fab {
+        animation: chatPulse 2s infinite;
+      }
+
+      .chat-fab::before,
+      .chat-fab::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        border: 2px solid rgba(184, 50, 43, 0.5);
+        animation: ripple 2s infinite;
+      }
+
+      .chat-fab::after {
+        animation-delay: 1s;
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: scale(1);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1.8);
+          opacity: 0;
+        }
+      }
+
+      @keyframes chatPulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.08);
+        }
+      }
+      .chat-fab {
+        animation:
+          chatPulse 2s infinite,
+          chatShake 6s infinite;
+      }
+
+      @keyframes chatShake {
+        0%,
+        90%,
+        100% {
+          transform: rotate(0deg);
+        }
+        92% {
+          transform: rotate(-8deg);
+        }
+        94% {
+          transform: rotate(8deg);
+        }
+        96% {
+          transform: rotate(-6deg);
+        }
+        98% {
+          transform: rotate(6deg);
+        }
+      }
+      .chat-fab:hover {
+        transform: scale(1.08);
+        background: #a12a24;
+      }
+      .chat-fab svg {
+        width: 28px;
+        height: 28px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .chat-fab .ic-close {
+        display: none;
+      }
+      .chat-fab.open .ic-chat {
+        display: none;
+      }
+      .chat-fab.open .ic-close {
+        display: block;
+      }
+      .chat-box {
+        position: fixed;
+        right: 24px;
+        bottom: 96px;
+        z-index: 1500;
+        width: min(350px, calc(100vw - 32px));
+        height: min(500px, calc(100vh - 130px));
+        background: #fff;
+        border-radius: 14px;
+        border: 1px solid #e1e3e8;
+        box-shadow: 0 18px 50px rgba(30, 32, 38, 0.28);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(16px) scale(0.98);
+        transform-origin: bottom right;
+        transition: 0.25s;
+      }
+      .chat-box.show {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+      }
+      .chat-head {
+        background: #2b2d33;
+        color: #fff;
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .chat-head .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--red);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .chat-head .avatar svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: #fff;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .chat-head strong {
+        display: block;
+        font-size: 14px;
+      }
+      .chat-head .sub {
+        font-size: 11px;
+        color: #c6c9d0;
+      }
+      .chat-msgs {
+        flex: 1;
+        overflow-y: auto;
+        padding: 14px;
+        background: #f6f7f9;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .chat-msg {
+        max-width: 86%;
+        padding: 9px 13px;
+        border-radius: 14px;
+        font-size: 13px;
+        line-height: 1.55;
+        white-space: pre-line;
+        overflow-wrap: anywhere;
+      }
+      .chat-msg.bot {
+        background: #fff;
+        border: 1px solid #e1e3e8;
+        color: var(--ink);
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+      }
+      .chat-msg.user {
+        background: var(--red);
+        color: #fff;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+      }
+      .chat-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-self: flex-start;
+        max-width: 94%;
+      }
+      .chat-chip {
+        border: 1px solid #cfd3da;
+        background: #fff;
+        color: var(--ink);
+        padding: 6px 12px;
+        border-radius: 16px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+      .chat-chip:hover {
+        background: var(--cream);
+      }
+      .chat-form {
+        display: flex;
+        gap: 8px;
+        padding: 10px;
+        border-top: 1px solid #e1e3e8;
+        background: #fff;
+      }
+      .chat-form input {
+        flex: 1;
+        min-width: 0;
+        border: 1px solid #d5d8de;
+        border-radius: 20px;
+        padding: 9px 14px;
+        font: inherit;
+        font-size: 13px;
+      }
+      .chat-form button {
+        border: 0;
+        background: var(--red);
+        color: #fff;
+        border-radius: 50%;
+        width: 38px;
+        height: 38px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .chat-form button svg {
+        width: 17px;
+        height: 17px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      @media (max-width: 700px) {
+        .chat-fab {
+          right: 16px;
+          bottom: 16px;
+          width: 54px;
+          height: 54px;
+        }
+        .chat-box {
+          right: 16px;
+          bottom: 82px;
         }
       }
     </style>
@@ -1683,6 +1984,60 @@
         </button>
       </form>
     </div>
+    <button
+      class="chat-fab"
+      id="chatFab"
+      type="button"
+      aria-label="Mở khung chat"
+      aria-expanded="false"
+      aria-controls="chatBox"
+    >
+      <svg class="ic-chat" viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+        />
+      </svg>
+      <svg class="ic-close" viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="6" y1="6" x2="18" y2="18" />
+        <line x1="18" y1="6" x2="6" y2="18" />
+      </svg>
+    </button>
+    <div
+      class="chat-box"
+      id="chatBox"
+      role="dialog"
+      aria-label="Hỗ trợ trực tuyến 10HARDHOME"
+    >
+      <div class="chat-head">
+        <div class="avatar">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+            />
+          </svg>
+        </div>
+        <div>
+          <strong>Trợ lý 10HARDHOME</strong
+          ><span class="sub">Trả lời tự động</span>
+        </div>
+      </div>
+      <div class="chat-msgs" id="chatMsgs" aria-live="polite"></div>
+      <form class="chat-form" id="chatForm">
+        <input
+          id="chatInput"
+          placeholder="Nhập câu hỏi của bạn..."
+          autocomplete="off"
+          maxlength="200"
+          aria-label="Nội dung tin nhắn"
+        />
+        <button type="submit" aria-label="Gửi">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="22" y1="2" x2="11" y2="13" />
+            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </svg>
+        </button>
+      </form>
+    </div>
     <div class="toast" id="toast"></div>
 
     <script>
@@ -1825,7 +2180,7 @@
               "Family Vườn Nhỏ",
               "Thiết kế thân thiện, tạo cảm giác gần gũi.",
               "980.000đ / đêm",
-              "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=700&q=82",
+              "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=700&q=82",
             ],
             [
               "Family Đà Lạt",
@@ -1922,19 +2277,88 @@
           title: "Đà Lạt mùa nào đẹp để ghé thăm?",
           desc: "Mỗi mùa Đà Lạt mang một vẻ đẹp riêng. Cùng tìm hiểu thời điểm phù hợp cho chuyến đi.",
           img: "https://cdn.pixabay.com/photo/2023/01/23/02/33/peach-blossoms-7737703_1280.jpg",
-          body: "Đà Lạt có khí hậu mát mẻ quanh năm nên bạn có thể ghé thăm vào nhiều thời điểm. Mùa khô thường thuận tiện cho các hoạt động tham quan ngoài trời. Những tháng cuối năm mang đến không khí se lạnh và sắc hoa đặc trưng. Hãy kiểm tra dự báo thời tiết trước chuyến đi, chuẩn bị áo ấm và sắp xếp lịch trình linh hoạt để tận hưởng thành phố.",
+          body: `Đà Lạt nằm trên cao nguyên Lâm Viên, ở độ cao hơn 1.500 m so với mực nước biển, nên khí hậu mát mẻ gần như quanh năm. Mỗi mùa mang một vẻ đẹp riêng, vì vậy mùa nào đẹp nhất còn tùy vào điều bạn muốn tìm kiếm trong chuyến đi.
+
+## Mùa khô (khoảng tháng 11 đến tháng 4)
+
+Đây thường là thời điểm đông khách nhất vì trời nắng nhẹ, ít mưa, rất hợp để đi dạo, chụp ảnh và tham quan ngoài trời. Vào cuối năm, các triền đồi thường nở dã quỳ vàng rực. Đầu năm là mùa mai anh đào với sắc hồng nhạt dọc những con đường trong thành phố. Buổi sáng sớm và buổi tối khá lạnh, bạn nên mang theo áo ấm dù ban ngày có nắng.
+
+## Mùa mưa (khoảng tháng 5 đến tháng 10)
+
+Mưa thường đến vào buổi chiều rồi tạnh, khiến thành phố xanh mướt và không khí trong lành hơn. Đây là khoảng thời gian vắng khách hơn, giá phòng thường dễ chịu hơn, thích hợp cho những ai thích ngồi quán cà phê, nghỉ ngơi ở homestay và có những buổi chiều thật chậm. Bạn nên mang ô hoặc áo mưa mỏng và chú ý đường trơn khi đi đồi núi.
+
+## Chọn thời điểm theo sở thích
+
+- Thích săn hoa và chụp ảnh: cuối năm đến đầu năm.
+- Muốn yên tĩnh, ít đông đúc: chọn các ngày trong tuần, tránh dịp lễ và Tết.
+- Thích sương sớm và săn mây: những buổi sáng sớm mùa khô ở các đồi cao.
+- Thích không khí xanh mát, thư giãn: mùa mưa, khi cây cối tươi tốt nhất.
+
+## Lưu ý trước khi đi
+
+Dù đi vào mùa nào, bạn hãy kiểm tra dự báo thời tiết trước chuyến đi, đặt phòng sớm vào các dịp lễ và dành thêm thời gian nghỉ ngơi giữa lịch trình. Phố núi đẹp nhất khi bạn không phải vội, hãy để mình đi chậm lại và tận hưởng.`,
         },
         {
           title: "Gợi ý hành lý cho chuyến đi Đà Lạt",
           desc: "Một vài món đồ cần thiết giúp hành trình của bạn thoải mái và chủ động hơn.",
           img: "https://i.pinimg.com/736x/47/2f/57/472f57c7d6ffc0e4010191e4d543e42b.jpg",
-          body: "Đừng quên chuẩn bị áo khoác ấm, giày đi bộ thoải mái, ô hoặc áo mưa mỏng và các vật dụng cá nhân. Nếu dự định tham quan ngoài trời, bạn nên mang theo kem chống nắng, bình nước và sạc dự phòng. Hãy sắp xếp hành lý gọn nhẹ để dễ dàng di chuyển giữa các điểm đến.",
+          body: `Thời tiết Đà Lạt thay đổi khá nhiều trong ngày: sáng sớm se lạnh, trưa có thể nắng, chiều tối lại mát và có sương. Chuẩn bị hành lý gọn nhẹ nhưng đủ lớp áo sẽ giúp bạn thoải mái hơn trong suốt chuyến đi.
+
+## Trang phục
+
+- Áo khoác ấm hoặc áo gió, vì buổi sáng sớm và buổi tối thường lạnh.
+- Vài lớp áo mỏng để dễ mặc thêm hoặc cởi bớt trong ngày.
+- Quần dài thoải mái và giày đi bộ có độ bám tốt cho những con dốc.
+- Khăn choàng, mũ len hoặc găng tay nếu bạn dễ bị lạnh.
+- Mũ hoặc kính râm cho những buổi trưa nắng.
+
+## Đồ dùng cá nhân
+
+- Kem chống nắng, kem dưỡng ẩm và son dưỡng môi vì không khí cao nguyên có thể hơi khô.
+- Ô hoặc áo mưa mỏng, đặc biệt trong mùa mưa.
+- Bình nước, sạc dự phòng và cáp sạc.
+- Thuốc cá nhân thông thường và thuốc say xe nếu bạn dễ say khi đi đường đèo.
+- Giấy tờ tùy thân và các thông tin đặt phòng.
+
+## Đồ dành cho từng hoạt động
+
+- Nếu thích chụp ảnh: máy ảnh hoặc điện thoại đầy pin, thẻ nhớ còn trống.
+- Nếu đi dạo chợ đêm hoặc quán cà phê: một chiếc túi nhỏ gọn đựng đồ cá nhân.
+- Nếu đi picnic hoặc dã ngoại: khăn trải, túi đựng rác và đồ ăn nhẹ.
+
+## Mẹo sắp xếp
+
+Hãy ưu tiên vali nhỏ hoặc balo gọn nhẹ để dễ di chuyển giữa các điểm đến. Bạn nên chừa một khoảng trống trong hành lý cho đặc sản và quà mang về. Nếu quên món gì, trung tâm thành phố có nhiều cửa hàng bán áo ấm, ô và các vật dụng cần thiết.`,
         },
         {
           title: "Kinh nghiệm khám phá Đà Lạt",
           desc: "Lên lịch trình hợp lý để không bỏ lỡ những trải nghiệm thú vị tại phố núi.",
           img: "https://i.pinimg.com/1200x/d3/c8/6d/d3c86d986a2f9da74a92169e74e78fc4.jpg",
-          body: "Bạn có thể chia lịch trình theo từng khu vực để tiết kiệm thời gian di chuyển. Buổi sáng dành cho quán cà phê hoặc điểm tham quan ngoài trời, buổi chiều ghé các khu vườn và buổi tối khám phá ẩm thực địa phương. Nên dành khoảng thời gian nghỉ ngơi giữa lịch trình và hỏi trước giờ hoạt động của từng địa điểm.",
+          body: `Đà Lạt có nhiều điểm đến nằm rải rác quanh thành phố, vì vậy một lịch trình hợp lý sẽ giúp bạn tiết kiệm thời gian di chuyển và có thêm những khoảnh khắc thư thả.
+
+## Chia lịch trình theo khu vực
+
+Bạn nên gom các điểm gần nhau vào cùng một buổi. Khu trung tâm thường có hồ Xuân Hương, quảng trường Lâm Viên, chợ Đà Lạt và nhiều quán cà phê, nhà hàng. Những điểm ở xa hơn như các đồi chè, thác nước hay khu rừng thông thường mất nhiều thời gian di chuyển hơn, nên dành riêng một buổi hoặc một ngày cho mỗi hướng.
+
+## Gợi ý một ngày khám phá
+
+- Buổi sáng: dậy sớm, ghé quán cà phê hoặc điểm tham quan ngoài trời khi trời còn mát.
+- Buổi trưa: ăn trưa và nghỉ ngơi một chút, tránh dồn quá nhiều điểm đến.
+- Buổi chiều: ghé các khu vườn, đồi hoặc điểm ngắm hoàng hôn.
+- Buổi tối: dạo chợ đêm, thưởng thức ẩm thực địa phương và các món nóng cho ngày se lạnh.
+
+## Di chuyển
+
+Bạn có thể thuê xe máy, gọi xe hoặc đi taxi tùy nhu cầu. Đường ở Đà Lạt có nhiều dốc và đèo, đôi khi có sương mù nên hãy đi chậm, giữ khoảng cách an toàn và không lái xe khi quá mệt. Nếu chưa quen đường đèo, bạn nên chọn phương tiện có người lái.
+
+## Những lưu ý hữu ích
+
+- Hỏi trước giờ hoạt động và giá vé của từng địa điểm để không bị mất công đi lại.
+- Mang theo một ít tiền mặt cho những nơi chưa hỗ trợ thanh toán điện tử.
+- Giữ gìn vệ sinh, không xả rác và tôn trọng cảnh quan, cư dân địa phương.
+- Mua đặc sản ở những cửa hàng uy tín và hỏi kỹ giá trước khi mua.
+
+Quan trọng nhất là chừa thời gian nghỉ giữa các điểm đến. Đà Lạt đẹp nhất khi bạn đi chậm và dành thời gian cảm nhận từng khoảnh khắc.`,
         },
       ];
 
@@ -1944,25 +2368,104 @@
           title: "Hồ Xuân Hương",
           desc: "Biểu tượng thơ mộng giữa trung tâm thành phố Đà Lạt.",
           img: "https://i.pinimg.com/1200x/74/d0/73/74d073eb03adb397116cbef9692f88d2.jpg",
-          body: "Hồ Xuân Hương nằm ngay trung tâm Đà Lạt, là địa điểm lý tưởng để đi dạo, ngắm cảnh và cảm nhận nhịp sống thành phố. Bạn có thể ghé hồ vào sáng sớm hoặc chiều muộn để tận hưởng không khí mát lành.",
+          body: `Hồ Xuân Hương nằm ngay giữa trung tâm Đà Lạt, là một trong những biểu tượng quen thuộc nhất của thành phố. Đây là hồ nhân tạo có hình dáng uốn cong như vầng trăng khuyết, mang tên nữ thi sĩ Hồ Xuân Hương. Chu vi mặt hồ khoảng 5 km nên bạn có thể đi bộ hoặc đạp xe quanh hồ một cách thong thả.
+
+## Những điều nên làm bên hồ
+
+- Đi dạo hoặc đạp xe quanh hồ, vừa ngắm cảnh vừa cảm nhận nhịp sống chậm của phố núi.
+- Đạp vịt hoặc thuê thuyền trên hồ nếu thời tiết đẹp.
+- Ngồi ở các quán cà phê ven hồ để ngắm mặt nước và những hàng thông soi bóng.
+- Chụp ảnh với những góc nhìn khác nhau, từ cầu, bờ hồ hoặc từ những con dốc nhỏ xung quanh.
+
+## Thời điểm đẹp để ghé
+
+Buổi sáng sớm là lúc hồ yên tĩnh nhất, thường có làn sương mỏng và không khí mát lành. Buổi chiều muộn lại có ánh nắng dịu và hoàng hôn đẹp. Buổi tối, khu vực quanh hồ và chợ Đà Lạt thường nhộn nhịp hơn với nhiều quán ăn và hàng quán nhỏ.
+
+## Những điểm gần hồ
+
+Hồ Xuân Hương nằm gần quảng trường Lâm Viên, chợ Đà Lạt và nhiều quán cà phê, nhà hàng, nên rất tiện để kết hợp tham quan trong cùng một buổi. Bạn có thể bắt đầu bằng một vòng quanh hồ rồi tiếp tục di chuyển bộ đến các điểm xung quanh.
+
+## Lưu ý
+
+Hãy mang theo áo ấm nếu đi sớm hoặc tối, giữ gìn vệ sinh khu vực bờ hồ và chú ý an toàn khi đạp xe hoặc đi thuyền. Giờ hoạt động của các dịch vụ trên hồ có thể thay đổi theo mùa và thời tiết, nên bạn hãy kiểm tra trước khi đến.`,
         },
         {
           title: "Quảng trường Lâm Viên",
           desc: "Điểm hẹn nổi bật với công trình kiến trúc hoa dã quỳ.",
           img: "https://i.pinimg.com/1200x/e0/e3/a9/e0e3a9d7effdb28ae6c2236b777157d5.jpg",
-          body: "Quảng trường Lâm Viên là địa điểm quen thuộc của du khách khi đến Đà Lạt. Nơi đây có không gian rộng, hướng nhìn ra hồ Xuân Hương và những công trình kiến trúc đặc trưng. Bạn có thể kết hợp tham quan khu vực trung tâm trong cùng một buổi.",
+          body: `Quảng trường Lâm Viên nằm bên cạnh hồ Xuân Hương và là một địa điểm quen thuộc của du khách khi đến Đà Lạt. Nơi đây có không gian rộng, hướng nhìn ra hồ và nổi bật với những công trình kính lớn lấy cảm hứng từ hoa dã quỳ và hoa atiso, những hình ảnh gắn với vùng đất cao nguyên.
+
+## Vì sao nên ghé
+
+- Không gian thoáng, dễ đi bộ, phù hợp cho cả gia đình và nhóm bạn.
+- Tầm nhìn đẹp ra hồ Xuân Hương và những dãy đồi thông phía xa.
+- Có nhiều góc chụp ảnh với các công trình kiến trúc đặc trưng.
+- Là điểm tập trung thuận tiện để bắt đầu một ngày khám phá trung tâm thành phố.
+
+## Thời điểm phù hợp
+
+Buổi sáng thường mát và ít người, thích hợp để đi dạo thong thả. Buổi chiều tối, khi đèn lên, không khí ở đây thường nhộn nhịp hơn. Vào cuối tuần và các dịp lễ, khu vực có thể đông khách, nên nếu thích sự yên tĩnh, bạn có thể đi vào các ngày trong tuần.
+
+## Kết hợp tham quan trong cùng một buổi
+
+Từ quảng trường, bạn có thể đi bộ dọc hồ Xuân Hương, ghé chợ Đà Lạt hoặc các quán cà phê gần đó. Nếu còn thời gian, hãy tìm hiểu thêm các điểm ở khu trung tâm như Nhà thờ Chánh tòa Đà Lạt, thường được gọi là nhà thờ Con Gà.
+
+## Lưu ý
+
+Hãy giữ gìn vệ sinh chung, không leo trèo lên các công trình và chú ý đồ đạc cá nhân ở nơi đông người. Bạn nên mang áo khoác mỏng cho buổi tối và kiểm tra các sự kiện hoặc hoạt động đang diễn ra trước khi đến.`,
         },
         {
           title: "Đồi chè Cầu Đất",
           desc: "Không gian xanh mát, thích hợp ngắm cảnh và chụp ảnh.",
           img: "https://i.pinimg.com/1200x/46/76/70/467670ab204c0812cad9a932ecbb1c1a.jpg",
-          body: "Đồi chè Cầu Đất mang đến khung cảnh xanh trải dài và không khí trong lành. Đây là gợi ý cho những ai thích thiên nhiên và muốn rời xa sự đông đúc của khu vực trung tâm. Nên kiểm tra đường đi và thời tiết trước khi khởi hành.",
+          body: `Đồi chè Cầu Đất nằm cách trung tâm Đà Lạt hơn 20 km, ở độ cao lớn hơn khu vực thành phố nên không khí mát và trong lành hơn. Nơi đây nổi tiếng với những triền chè xanh trải dài, những hàng chè uốn lượn theo sườn đồi và khung cảnh yên bình, rất hợp cho ai thích thiên nhiên và muốn rời xa sự đông đúc của khu trung tâm.
+
+## Thời điểm đẹp để ghé
+
+Bình minh là lúc đẹp nhất. Nếu thời tiết thuận lợi, bạn có thể gặp biển mây và ánh nắng đầu ngày chiếu lên những luống chè. Mùa khô thường dễ có trời quang hơn. Vì ở xa trung tâm và thường lạnh hơn, bạn nên khởi hành sớm và mang theo áo ấm.
+
+## Bạn có thể làm gì
+
+- Đi dạo giữa các luống chè và chụp ảnh với những góc nhìn rộng.
+- Thưởng thức trà hoặc cà phê ở các quán ven đồi nếu có.
+- Tìm hiểu về quá trình trồng và chế biến chè nếu có khu tham quan mở cửa.
+- Kết hợp ngắm cảnh trên đường đi, vì cung đường tới Cầu Đất cũng có nhiều khung cảnh đẹp.
+
+## Chuẩn bị cho chuyến đi
+
+Hãy kiểm tra thời tiết và tình trạng đường đi trước khi khởi hành, vì đường lên đồi có đoạn dốc và đôi khi có sương mù. Mang theo giày đi bộ có độ bám tốt, nước uống và kem chống nắng. Nếu chưa quen đường đèo, bạn nên chọn phương tiện có người lái.
+
+## Lưu ý
+
+Đồi chè là nơi người dân canh tác, vì vậy bạn đừng giẫm lên luống chè, đừng hái chè, không xả rác và hãy tôn trọng những khu vực có biển cấm. Nên hỏi trước giờ mở cửa và các quy định tham quan tại từng điểm.`,
         },
         {
           title: "Rừng thông Đà Lạt",
           desc: "Tìm về sự yên tĩnh giữa những hàng thông đặc trưng phố núi.",
           img: "https://i.pinimg.com/1200x/fe/d9/8b/fed98bd4d45a34a9f9169200a967474f.jpg",
-          body: "Những cánh rừng thông tạo nên nét đặc trưng của cảnh quan Đà Lạt. Bạn có thể chọn các điểm tham quan được phép tiếp cận, đi theo lối quy định và giữ gìn vệ sinh môi trường để bảo vệ thiên nhiên.",
+          body: `Những cánh rừng thông tạo nên nét đặc trưng của cảnh quan Đà Lạt. Thông mọc khắp thành phố, từ ven đường, quanh các hồ đến những sườn đồi, tạo nên khung cảnh xanh mát và mùi hương dễ chịu mà nhiều du khách nhớ mãi.
+
+## Bạn có thể làm gì giữa rừng thông
+
+- Đi dạo thư giãn trên những lối đi được phép, hít thở không khí trong lành.
+- Chụp ảnh với ánh nắng xuyên qua tán thông, đẹp nhất vào buổi sáng và chiều muộn.
+- Tổ chức picnic nhẹ nhàng ở những khu vực cho phép.
+- Đi bộ đường ngắn hoặc trekking nhẹ nếu bạn thích vận động ngoài trời.
+
+## Chọn điểm tham quan phù hợp
+
+Mỗi khu rừng thông có quy định khác nhau. Một số nơi là khu du lịch có thu phí và có đường đi rõ ràng, một số nơi là rừng được bảo vệ và không phải lúc nào cũng được phép vào. Bạn nên tìm hiểu trước và chọn những điểm được phép tiếp cận, đi theo lối đi quy định.
+
+## Giữ gìn thiên nhiên
+
+- Mang rác về hoặc bỏ đúng nơi quy định.
+- Không đốt lửa, không hút thuốc, vì rừng thông rất dễ cháy trong mùa khô.
+- Không bẻ cành, không khắc chữ lên thân cây và không làm ảnh hưởng đến động thực vật.
+- Giữ yên lặng để không làm phiền cảnh quan và những người xung quanh.
+
+## Lưu ý an toàn
+
+Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trước khi đi. Trời ở vùng núi có thể tối và lạnh nhanh vào cuối chiều, nên bạn hãy tính thời gian để quay về trước khi trời tối. Nếu đi vào mùa mưa, chú ý đường trơn và tránh những nơi có nguy cơ sạt lở.`,
         },
       ];
 
@@ -1981,7 +2484,7 @@
           .join("");
         // Nút "Xem thêm" đặt dưới grid, căn giữa (chỉ khi expandable = true, trang Dịch vụ)
         const moreBtn = expandable
-          ? `<div class="category-actions"><button class="view-more" onclick="toggleCategory(this)">Xem thêm <span class="chev"></span></button></div>`
+          ? `<div class="category-actions"><button class="view-more" onclick="toggleCategory(this)">Xem thêm <span class="chev down"></span></button></div>`
           : "";
         return `<section class="category-block" ${expandable ? 'data-expandable="true"' : ""}><div class="category-head"><div><h2>${cat.name}</h2><p>${cat.desc}</p></div></div><div class="room-grid">${rooms}</div>${moreBtn}</section>`;
       }
@@ -2036,7 +2539,7 @@
         }
       }
 
-      function showPage(page) {
+      function showPage(page, opts = {}) {
         document
           .querySelectorAll(".page")
           .forEach((p) => p.classList.remove("active"));
@@ -2050,7 +2553,9 @@
         document.getElementById("mainNav").classList.remove("open");
         document.getElementById("searchPanel").classList.add("hidden");
         updateNavIndicator();
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (typeof opts.scrollTo === "number")
+          window.scrollTo({ top: opts.scrollTo, left: 0, behavior: "instant" });
+        else window.scrollTo({ top: 0, behavior: "smooth" });
         history.replaceState(null, "", "#" + page);
       }
       document.querySelectorAll(".nav-link").forEach((a) =>
@@ -2076,16 +2581,83 @@
         block.classList.toggle("expanded");
         button.innerHTML = block.classList.contains("expanded")
           ? 'Thu gọn <span class="chev up"></span>'
-          : 'Xem thêm <span class="chev"></span>';
+          : 'Xem thêm <span class="chev down"></span>';
+      }
+      // Nhớ vị trí cuộn trên trang chủ để quay lại đúng chỗ đã bấm "Xem thêm"
+      let homeScrollY = 0;
+      function backToHome() {
+        showPage("home", { scrollTo: homeScrollY });
+      }
+      function renderBody(text) {
+        const esc = (t) =>
+          t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return text
+          .trim()
+          .split(/\n\s*\n/)
+          .map((blk) => {
+            const lines = blk
+              .split("\n")
+              .map((l) => l.trim())
+              .filter(Boolean);
+            if (lines[0].startsWith("## "))
+              return `<h2>${esc(lines[0].slice(3))}</h2>`;
+            if (lines.every((l) => l.startsWith("- ")))
+              return `<ul class="article-list">${lines.map((l) => `<li>${esc(l.slice(2))}</li>`).join("")}</ul>`;
+            return `<p class="article-text">${esc(lines.join(" "))}</p>`;
+          })
+          .join("");
       }
       function openArticle(type, index) {
         const item = (type === "guide" ? guides : explorations)[index];
+        homeScrollY = window.scrollY;
         document.getElementById("articleDetail").innerHTML =
-          `<a href="#" class="back-link" onclick="showPage('home');return false"><span class="chev left"></span>Quay lại trang chủ</a><span class="eyebrow">${type === "guide" ? "CẨM NANG VI VU" : "KHÁM PHÁ ĐÀ LẠT"}</span><h1>${item.title}</h1><img src="${item.img}" alt="${item.title}"><p class="article-text">${item.body}</p><div style="margin-top:28px"><button class="btn btn-primary" onclick="showPage('services')">Tìm phòng tại 10HARDHOME →</button></div>`;
+          `<a href="#" class="back-link" onclick="backToHome();return false"><span class="chev left"></span>Quay lại trang chủ</a><span class="eyebrow">${type === "guide" ? "CẨM NANG VI VU" : "KHÁM PHÁ ĐÀ LẠT"}</span><h1>${item.title}</h1><img src="${item.img}" alt="${item.title}">${renderBody(item.body)}<div style="margin-top:28px"><button class="btn btn-primary" onclick="showPage('services')">Tìm phòng tại 10HARDHOME →</button></div>`;
         showPage("article");
       }
       const backdrop = document.getElementById("bookingBackdrop");
+      // ----- Ngày nhận / trả phòng: luôn lấy theo ngày hiện tại của thiết bị -----
+      const checkinInput = document.getElementById("checkin");
+      const checkoutInput = document.getElementById("checkout");
+      const pad2 = (v) => String(v).padStart(2, "0");
+      const localDate = (d) =>
+        `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+      const addDays = (str, k) => {
+        const [y, m, d] = str.split("-").map(Number);
+        return localDate(new Date(y, m - 1, d + k));
+      };
+      function syncCheckout(reset) {
+        const minOut = addDays(checkinInput.value, 1);
+        checkoutInput.min = minOut;
+        if (reset || !checkoutInput.value || checkoutInput.value < minOut)
+          checkoutInput.value = minOut;
+      }
+      function refreshBookingDates(reset) {
+        const today = localDate(new Date());
+        checkinInput.min = today;
+        if (reset || !checkinInput.value || checkinInput.value < today)
+          checkinInput.value = today;
+        syncCheckout(reset);
+      }
+      checkinInput.addEventListener("change", () => {
+        if (!checkinInput.value || checkinInput.value < checkinInput.min)
+          checkinInput.value = checkinInput.min;
+        syncCheckout(false);
+      });
+      checkoutInput.addEventListener("change", () => {
+        if (!checkoutInput.value || checkoutInput.value < checkoutInput.min)
+          checkoutInput.value = checkoutInput.min;
+      });
+      checkinInput.min = localDate(new Date());
+      // Cập nhật mỗi phút và khi quay lại tab để không bao giờ dùng ngày đã qua
+      setInterval(() => {
+        if (backdrop.classList.contains("show")) refreshBookingDates(false);
+        else checkinInput.min = localDate(new Date());
+      }, 60000);
+      document.addEventListener("visibilitychange", () => {
+        if (!document.hidden) refreshBookingDates(false);
+      });
       function openBooking(room) {
+        refreshBookingDates(true);
         document.getElementById("bookingRoom").value = room;
         backdrop.classList.add("show");
         document.body.style.overflow = "hidden";
@@ -2102,6 +2674,16 @@
       });
       document.getElementById("bookingForm").addEventListener("submit", (e) => {
         e.preventDefault();
+        if (
+          checkinInput.value < localDate(new Date()) ||
+          checkoutInput.value <= checkinInput.value
+        ) {
+          showToast(
+            "Ngày nhận phòng phải từ hôm nay trở đi và ngày trả phòng phải sau ngày nhận phòng.",
+          );
+          refreshBookingDates(false);
+          return;
+        }
         const data = new FormData(e.target);
         const message = `Yêu cầu đặt phòng 10HARDHOME\nPhòng: ${data.get("room")}\nHọ tên: ${data.get("name")}\nĐiện thoại: ${data.get("phone")}\nNhận phòng: ${data.get("checkin")}\nTrả phòng: ${data.get("checkout")}\nGhi chú: ${data.get("note") || "Không có"}`;
         closeBooking();
@@ -2196,6 +2778,203 @@
         .getElementById("heroNext")
         .addEventListener("click", () => goSlide(currentSlide + 1));
       restartSlideTimer();
+
+      // ===== Chatbox hỗ trợ: trả lời tự động theo từ khóa (không cần máy chủ) =====
+      (function () {
+        const fab = document.getElementById("chatFab");
+        const box = document.getElementById("chatBox");
+        const msgs = document.getElementById("chatMsgs");
+        const form = document.getElementById("chatForm");
+        const input = document.getElementById("chatInput");
+        let started = false;
+        const norm = (t) =>
+          t
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/đ/g, "d");
+        const money = (v) => v.toLocaleString("vi-VN") + "đ";
+        function add(text, who) {
+          const d = document.createElement("div");
+          d.className = "chat-msg " + who;
+          d.textContent = text;
+          msgs.appendChild(d);
+          msgs.scrollTop = msgs.scrollHeight;
+        }
+        function chips(list) {
+          const w = document.createElement("div");
+          w.className = "chat-chips";
+          list.forEach(([label, fn]) => {
+            const b = document.createElement("button");
+            b.type = "button";
+            b.className = "chat-chip";
+            b.textContent = label;
+            b.addEventListener("click", fn);
+            w.appendChild(b);
+          });
+          msgs.appendChild(w);
+          msgs.scrollTop = msgs.scrollHeight;
+        }
+        function say(text, list) {
+          setTimeout(() => {
+            add(text, "bot");
+            if (list) chips(list);
+          }, 350);
+        }
+        function setOpen(open) {
+          box.classList.toggle("show", open);
+          fab.classList.toggle("open", open);
+          fab.setAttribute("aria-expanded", String(open));
+          fab.setAttribute(
+            "aria-label",
+            open ? "Đóng khung chat" : "Mở khung chat",
+          );
+          if (open) {
+            if (!started) {
+              started = true;
+              add(
+                "Xin chào! Mình là trợ lý tự động của 10HARDHOME. Bạn muốn mình giúp gì hôm nay?",
+                "bot",
+              );
+              chips(MAIN);
+            }
+            setTimeout(() => input.focus(), 250);
+          }
+        }
+        const go = (fn) => () => {
+          setOpen(false);
+          fn();
+        };
+        const ask = (q) => () => handle(q);
+        const MAIN = [
+          ["Giá phòng", ask("Giá phòng")],
+          ["Đặt phòng", ask("Đặt phòng")],
+          ["Gợi ý địa điểm", ask("Gợi ý địa điểm")],
+          ["Liên hệ", ask("Liên hệ")],
+        ];
+        function contact() {
+          const o = {};
+          document.querySelectorAll(".contact-item").forEach((it) => {
+            const k = it.querySelector("strong")?.textContent.trim();
+            const v = it
+              .querySelector(":scope > div > span, :scope > div > a")
+              ?.textContent.trim();
+            if (k && v) o[k] = v;
+          });
+          return o;
+        }
+        function priceText() {
+          return categories
+            .map((c) => {
+              const nums = c.rooms
+                .map((r) => parseInt(String(r[2]).replace(/\D/g, ""), 10))
+                .filter(Boolean);
+              const lo = Math.min(...nums),
+                hi = Math.max(...nums);
+              return (
+                "• " +
+                c.name +
+                ": " +
+                (lo === hi ? money(lo) : money(lo) + " – " + money(hi)) +
+                " / đêm"
+              );
+            })
+            .join("\n");
+        }
+        const toServices = [
+          "Xem danh sách phòng",
+          go(() => showPage("services")),
+        ];
+        function handle(text) {
+          add(text, "user");
+          const t = norm(text);
+          const c = contact();
+          const line = Object.entries(c)
+            .map(([k, v]) => k + ": " + v)
+            .join("\n");
+          if (/\b(xin chao|chao|hello|hi|alo)\b/.test(t)) {
+            say(
+              "Xin chào! Mình có thể giúp bạn xem giá phòng, hướng dẫn đặt phòng, gợi ý địa điểm ở Đà Lạt hoặc thông tin liên hệ.",
+              MAIN,
+            );
+          } else if (
+            /\b(gia|bao nhieu|chi phi|bang gia)\b|tien phong/.test(t)
+          ) {
+            say(
+              "Giá phòng tham khảo:\n" +
+                priceText() +
+                "\n\nGiá có thể thay đổi theo thời điểm. Bạn xem chi tiết từng phòng ở trang Dịch vụ nhé.",
+              [toServices, ["Đặt phòng", ask("Đặt phòng")]],
+            );
+          } else if (
+            /dat phong|dat cho|booking|\bbook\b|nhan phong|tra phong/.test(t)
+          ) {
+            say(
+              "Để đặt phòng, bạn vào trang Dịch vụ, chọn phòng và bấm nút Đặt phòng. Điền họ tên, số điện thoại, ngày nhận phòng (từ hôm nay trở đi) và ngày trả phòng (sau ngày nhận). 10HARDHOME sẽ liên hệ lại để xác nhận.",
+              [toServices],
+            );
+          } else if (/dia chi|o dau|vi tri|ban do|duong di/.test(t)) {
+            say("Địa chỉ: " + (c["Địa chỉ"] || "Đà Lạt, Lâm Đồng") + ".", [
+              ["Xem trang Liên hệ", go(() => showPage("contact"))],
+            ]);
+          } else if (
+            /lien he|dien thoai|so dt|sdt|hotline|email|mail|zalo/.test(t)
+          ) {
+            say(
+              (line || "Bạn vui lòng xem thông tin ở trang Liên hệ.") +
+                "\n\nBạn cũng có thể gửi yêu cầu trong trang Liên hệ.",
+              [["Xem trang Liên hệ", go(() => showPage("contact"))]],
+            );
+          } else if (
+            /goi y|tham quan|di dau|du lich|dia diem|kham pha|ho xuan huong|lam vien|cau dat|rung thong|choi/.test(
+              t,
+            )
+          ) {
+            say(
+              "Một số địa điểm nên ghé khi ở Đà Lạt, bạn bấm để xem chi tiết:",
+              explorations.map((a, i) => [
+                a.title,
+                go(() => openArticle("explore", i)),
+              ]),
+            );
+          } else if (
+            /thoi tiet|mua nao|thoi diem|hanh ly|mang gi|kinh nghiem|chuan bi/.test(
+              t,
+            )
+          ) {
+            say(
+              "Bạn có thể tham khảo các bài trong Cẩm nang vi vu:",
+              guides.map((a, i) => [
+                a.title,
+                go(() => openArticle("guide", i)),
+              ]),
+            );
+          } else if (/cam on|thanks|thank/.test(t)) {
+            say("Không có gì ạ! Chúc bạn có chuyến đi thật vui vẻ ở Đà Lạt.");
+          } else {
+            say(
+              "Mình chưa hiểu rõ câu hỏi này. Bạn có thể chọn gợi ý bên dưới" +
+                (line ? " hoặc liên hệ trực tiếp:\n" + line : "") +
+                ".",
+              MAIN,
+            );
+          }
+        }
+        fab.addEventListener("click", () =>
+          setOpen(!box.classList.contains("show")),
+        );
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const text = input.value.trim();
+          if (!text) return;
+          input.value = "";
+          handle(text);
+        });
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && box.classList.contains("show"))
+            setOpen(false);
+        });
+      })();
 
       // Nếu truy cập bằng liên kết có hash, mở đúng mục tương ứng.
       const initial = (location.hash || "").replace("#", "");
