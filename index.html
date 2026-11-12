@@ -448,38 +448,27 @@
         background: #92251f;
         transform: translateY(-2px);
       }
-      /* Nút đỏ trong banner: phóng to nhỏ mượt mà, rê chuột vào thì bật lên */
+      /* Nút đỏ trong banner: hiệu ứng bật lên với viền trắng bên trái và phía dưới */
       .hero-content .btn-primary {
-        animation: heroBtnBreath 2.4s ease-in-out infinite;
-        will-change: transform, scale;
+        position: relative;
+        background: var(--red);
+        color: #fff;
+        border: 1px solid var(--red);
         transition:
-          transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-          box-shadow 0.3s ease,
-          background-color 0.25s ease;
+          transform 0.22s ease,
+          box-shadow 0.22s ease;
       }
       .hero-content .btn-primary:hover,
       .hero-content .btn-primary:focus-visible {
-        animation-play-state: paused;
-        transform: translateY(-7px) scale(1.07);
-        box-shadow: 0 14px 28px rgba(184, 50, 43, 0.45);
+        background: var(--red);
+        color: #fff;
+        transform: translate(3px, -3px);
+        box-shadow: -4px 4px 0 #fff;
       }
       .hero-content .btn-primary:active {
-        transform: translateY(-2px) scale(0.98);
-        transition-duration: 0.12s;
-      }
-      @keyframes heroBtnBreath {
-        0%,
-        100% {
-          scale: 1;
-        }
-        50% {
-          scale: 1.08;
-        }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .hero-content .btn-primary {
-          animation: none;
-        }
+        transform: translate(1px, -1px);
+        box-shadow: -2px 2px 0 #fff;
+        transition-duration: 0.1s;
       }
       .btn-outline {
         border-color: var(--brown);
