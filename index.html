@@ -3380,6 +3380,44 @@ Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trư�
       document
         .getElementById("heroNext")
         .addEventListener("click", () => goSlide(currentSlide + 1));
+
+      // Hỗ trợ vuốt chuyển banner trên điện thoại và thiết bị cảm ứng.
+      // touch-action: pan-y vẫn cho phép người dùng cuộn trang theo chiều dọc.
+      const hero = document.querySelector(".hero");
+      if (hero) {
+        hero.style.touchAction = "pan-y";
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchPointerId = null;
+
+        hero.addEventListener("pointerdown", (event) => {
+          if (event.pointerType === "mouse" || !event.isPrimary) return;
+          touchStartX = event.clientX;
+          touchStartY = event.clientY;
+          touchPointerId = event.pointerId;
+        });
+
+        hero.addEventListener("pointerup", (event) => {
+          if (touchPointerId !== event.pointerId) return;
+
+          const deltaX = event.clientX - touchStartX;
+          const deltaY = event.clientY - touchStartY;
+          touchPointerId = null;
+
+          // Chỉ đổi banner khi thao tác vuốt đủ dài và theo chiều ngang.
+          if (
+            Math.abs(deltaX) >= 45 &&
+            Math.abs(deltaX) > Math.abs(deltaY) * 1.2
+          ) {
+            goSlide(deltaX < 0 ? currentSlide + 1 : currentSlide - 1);
+          }
+        });
+
+        hero.addEventListener("pointercancel", () => {
+          touchPointerId = null;
+        });
+      }
+
       restartSlideTimer();
 
       (function () {
