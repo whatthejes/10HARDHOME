@@ -1037,6 +1037,87 @@
         font-weight: 700;
         margin-bottom: 20px;
       }
+
+      /* Đánh giá khách hàng */
+      .customer-reviews {
+        background: var(--white);
+      }
+      .review-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+      .review-card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 7px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(30, 32, 38, 0.06);
+        display: flex;
+        flex-direction: column;
+      }
+      .review-stars {
+        color: #e5a52b;
+        letter-spacing: 3px;
+        font-size: 18px;
+      }
+      .review-score {
+        color: var(--dark);
+        font:
+          800 23px "Montserrat",
+          sans-serif;
+        margin-top: 7px;
+      }
+      .review-score span {
+        color: var(--muted);
+        font:
+          500 12px "Be Vietnam Pro",
+          sans-serif;
+      }
+      .review-quote {
+        color: #555b65;
+        font-size: 13px;
+        line-height: 1.8;
+        margin: 15px 0 22px;
+        flex: 1;
+      }
+      .review-author {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        border-top: 1px solid #eceef1;
+        padding-top: 16px;
+      }
+      .review-avatar {
+        width: 39px;
+        height: 39px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: #eceef1;
+        color: var(--dark);
+        font-size: 12px;
+        font-weight: 800;
+      }
+      .review-author strong,
+      .review-author small {
+        display: block;
+      }
+      .review-author strong {
+        color: var(--dark);
+        font-size: 12px;
+      }
+      .review-author small {
+        color: var(--muted);
+        font-size: 10px;
+      }
+      .review-note {
+        color: #777d87;
+        font-size: 10px;
+        text-align: center;
+        margin-top: 18px;
+      }
+
       .site-footer {
         background: #2d2f34;
         color: #f3f4f6;
@@ -1346,6 +1427,13 @@
         }
         .article-grid {
           grid-template-columns: 1fr;
+        }
+        .review-grid {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        .review-card {
+          padding: 21px;
         }
         .article-card img {
           height: 230px;
@@ -1949,6 +2037,72 @@
               </p>
             </div>
             <div class="explore-grid" id="exploreCards"></div>
+          </div>
+        </section>
+
+        <section class="section customer-reviews" id="reviews">
+          <div class="container">
+            <div class="section-heading">
+              <span class="eyebrow">Trải nghiệm lưu trú</span>
+              <h2 class="section-title">KHÁCH HÀNG NÓI GÌ VỀ 10HARDHOME?</h2>
+              <p class="section-intro">
+                Những cảm nhận nổi bật sau hành trình nghỉ dưỡng tại 10HARDHOME.
+              </p>
+            </div>
+            <div class="review-grid">
+              <article class="review-card">
+                <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
+                <div class="review-score">5.0 <span>/ 5.0</span></div>
+                <p class="review-quote">
+                  “Không gian sạch sẽ, ấm cúng và rất dễ chịu. Nhân viên thân
+                  thiện, hỗ trợ nhiệt tình nên chuyến đi Đà Lạt của mình trọn
+                  vẹn hơn rất nhiều.”
+                </p>
+                <div class="review-author">
+                  <span class="review-avatar">MA</span>
+                  <div>
+                    <strong>Minh Anh</strong><small>Khách lưu trú</small>
+                  </div>
+                </div>
+              </article>
+              <article class="review-card">
+                <div class="review-stars" aria-label="4.8 trên 5 sao">
+                  ★★★★★
+                </div>
+                <div class="review-score">4.8 <span>/ 5.0</span></div>
+                <p class="review-quote">
+                  “Phòng đúng như hình, bài trí đẹp và có cảm giác gần gũi như ở
+                  nhà. Vị trí thuận tiện để di chuyển đến những địa điểm tham
+                  quan.”
+                </p>
+                <div class="review-author">
+                  <span class="review-avatar">QT</span>
+                  <div>
+                    <strong>Quốc Thịnh</strong><small>Khách lưu trú</small>
+                  </div>
+                </div>
+              </article>
+              <article class="review-card">
+                <div class="review-stars" aria-label="4.6 trên 5 sao">
+                  ★★★★★
+                </div>
+                <div class="review-score">4.6 <span>/ 5.0</span></div>
+                <p class="review-quote">
+                  “Mình hài lòng với sự yên tĩnh và cách phục vụ chu đáo ở đây.
+                  Đây sẽ là một trong những lựa chọn mình cân nhắc cho lần trở
+                  lại Đà Lạt.”
+                </p>
+                <div class="review-author">
+                  <span class="review-avatar">HL</span>
+                  <div>
+                    <strong>Hà Linh</strong><small>Khách lưu trú</small>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <p class="review-note">
+              * Nội dung đánh giá mẫu để minh họa giao diện website.
+            </p>
           </div>
         </section>
       </section>
