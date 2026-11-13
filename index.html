@@ -1844,6 +1844,24 @@
         margin-top: 12px;
       }
 
+      .my-booking-actions {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px 12px;
+        margin-top: 12px;
+      }
+
+      .my-booking-info .my-booking-actions .btn-cancel {
+        margin-top: 0;
+      }
+
+      .my-booking-note {
+        font-size: 12px;
+        line-height: 1.45;
+        color: #e0700a;
+      }
+
       @media (max-width: 600px) {
         .my-booking-card {
           flex-direction: column-reverse;
@@ -2576,9 +2594,12 @@
         <p>Người đặt: ${esc(booking.name)}</p>
         <p>Điện thoại: ${esc(booking.phone)}</p>
         <p>Ghi chú: ${esc(booking.note)}</p>
-        <button class="btn btn-cancel" onclick="cancelBooking('${esc(booking.id)}')">
-          Hủy đặt phòng
-        </button>
+        <div class="my-booking-actions">
+          <button class="btn btn-cancel" onclick="cancelBooking('${esc(booking.id)}')">
+            Hủy đặt phòng
+          </button>
+          <span class="my-booking-note">*chúng tôi sẽ liên hệ với bạn để hoàn tất đặt phòng trong giây lát*</span>
+        </div>
       </div>
       ${img ? `<img class="my-booking-image" src="${esc(img)}" alt="Ảnh ${esc(booking.room)}">` : ""}
     </article>`;
