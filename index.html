@@ -629,6 +629,10 @@
         font-size: 13px;
         font-weight: 700;
       }
+      .room-tag.sold-out {
+        color: var(--red);
+        border-color: var(--red);
+      }
       .room-info {
         padding: 17px;
         display: flex;
@@ -1862,7 +1866,7 @@
       .my-booking-note {
         font-size: 12px;
         line-height: 1.45;
-        color: #e0700a;
+        color: #218838;
       }
 
       @media (max-width: 600px) {
@@ -3062,10 +3066,27 @@ Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trư�
         },
       ];
 
+      // Phòng nào đã có yêu cầu đặt trên thiết bị này thì nhãn đổi từ "Còn phòng" (xanh) sang "Hết phòng" (đỏ)
+      function roomBookedNames() {
+        return new Set(
+          JSON.parse(localStorage.getItem("myBookings") || "[]").map(
+            (b) => b.room,
+          ),
+        );
+      }
+      function refreshRoomStatus() {
+        const booked = roomBookedNames();
+        document.querySelectorAll(".room-tag[data-room]").forEach((tag) => {
+          const isBooked = booked.has(tag.dataset.room);
+          tag.textContent = isBooked ? "Hết phòng" : tag.dataset.available;
+          tag.classList.toggle("sold-out", isBooked);
+        });
+      }
       function roomCard(room, cat, index) {
         const [name, desc, price, img] = room;
+        const booked = roomBookedNames().has(name);
         return `<article class="room-card" data-search="${(name + " " + desc + " " + cat.name).toLowerCase()}">
-      <div class="room-image"><img loading="lazy" src="${img}" alt="${name}"><span class="room-tag">${cat.tag}</span></div>
+      <div class="room-image"><img loading="lazy" src="${img}" alt="${name}"><span class="room-tag${booked ? " sold-out" : ""}" data-room="${String(name).replace(/"/g, "&quot;")}" data-available="${cat.tag}">${booked ? "Hết phòng" : cat.tag}</span></div>
       <div class="room-info"><h3>${name}</h3><p>${desc}</p><div class="room-meta"><span>♙ ${cat.name === "Phòng gia đình" ? "3–5 khách" : cat.name === "Phòng đơn" ? "1 khách" : "2 khách"}</span><span class="room-price">${price}</span></div>
       <div class="room-actions"><button class="btn btn-primary" onclick="openBooking('${name.replace(/'/g, "\\'")}')">Đặt phòng</button></div></div></article>`;
       }
@@ -3157,7 +3178,10 @@ Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trư�
         localStorage.removeItem(BOOKING_DOT_KEY);
         updateBookingDot();
       }
-      window.addEventListener("storage", updateBookingDot);
+      window.addEventListener("storage", () => {
+        updateBookingDot();
+        refreshRoomStatus();
+      });
       function showPage(page, opts = {}) {
         document
           .querySelectorAll(".page")
@@ -3332,6 +3356,7 @@ Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trư�
         bookings.push(booking);
         localStorage.setItem("myBookings", JSON.stringify(bookings));
         markNewBooking();
+        refreshRoomStatus();
 
         closeBooking();
         e.target.reset();
@@ -3411,6 +3436,7 @@ Hãy đi theo nhóm, mang theo nước uống và kiểm tra thời tiết trư�
         );
         renderMyBookings();
         updateBookingDot();
+        refreshRoomStatus();
         showToast("Đã hủy yêu cầu đặt phòng trên thiết bị này.");
       }
 
